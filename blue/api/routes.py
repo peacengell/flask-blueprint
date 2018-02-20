@@ -23,8 +23,10 @@ def getStuff():
     platform = sys.platform
     load = os.getloadavg()
     User = os.environ['USER']
+    cpu = os.cpu_count()
     return jsonify({
+        'Cpu': cpu,
         'User' : User,
         'Plaform': platform,
-        'actual_load': load,
+        'Actual_load': load,
         })
