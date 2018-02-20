@@ -1,8 +1,9 @@
 # flask-blueprint/blue/api/routes.py
 # importing blueprint from flask
 
-from flask import Blueprint
-
+from flask import Blueprint, jsonify
+import sys
+import os
 # intantiate the blueprint
 # mod is the name
 # blueprint taking two arguments
@@ -19,4 +20,11 @@ mod = Blueprint('api', __name__)
 
 # This is the function that what we are going to show a json ouput on the api.
 def getStuff():
-    return '{"result" : "You are in the API!!!}'
+    platform = sys.platform
+    load = os.getloadavg()
+    User = os.environ['USER']
+    return jsonify({
+        'User' : User,
+        'Plaform': platform,
+        'actual_load': load,
+        })
