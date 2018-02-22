@@ -4,6 +4,7 @@
 from flask import Blueprint, jsonify
 import sys
 import os
+import time
 # intantiate the blueprint
 # mod is the name
 # blueprint taking two arguments
@@ -19,14 +20,28 @@ mod = Blueprint('api', __name__)
 @mod.route('/getStuff')
 
 # This is the function that what we are going to show a json ouput on the api.
+
 def getStuff():
+    pids = []
+    for subdir in os.listdir('/proc'):
+        if subdir.isdigit():
+            pids.append(subdir)
+
+
     platform = sys.platform
     load = os.getloadavg()
     User = os.environ['USER']
     cpu = os.cpu_count()
+    today_date = time.strftime(("%y-%m-%d"))
+    today_time = today = time.strftime(("%H:%M"))
+
+
     return jsonify({
         'Cpu': cpu,
         'User' : User,
         'Plaform': platform,
         'Actual_load': load,
+        'Total Running process': len(pids),
+        "Today's Date" : today_date,
+        "Today's Time" : today_time
         })
